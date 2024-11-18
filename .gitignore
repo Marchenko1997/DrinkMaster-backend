@@ -1,9 +1,6 @@
-//.gitignore
-
-/node_modules
-
+node_modules/
 .env
-
-.vscode
-.DS_Store
+.env.local
 .idea
+.vscode
+

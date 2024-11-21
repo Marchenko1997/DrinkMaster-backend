@@ -5,8 +5,8 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint **/*.js",
-    "lint:fix": "eslint --fix **/*.js",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
     "start": "node ./src/index.js",
     "dev": "nodemon src/index.js",
     "build": "npm run build-docs",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.3",
     "cors": "^2.8.5",

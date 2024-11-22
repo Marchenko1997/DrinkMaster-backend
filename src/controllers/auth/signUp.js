@@ -5,7 +5,7 @@ import { User } from '../../models/users.js';
 import { HttpError, sendEmail, fullYearsCount } from '../../helpers/index.js';
 
 // const { BASE_URL } = process.env;
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'http://http://localhost:5173/drink-code-frontend';
 
 export const signUp = async (req, res) => {
   const { email, password } = req.body;

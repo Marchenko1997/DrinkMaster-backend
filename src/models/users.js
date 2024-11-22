@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import Joi from 'joi';
-import { handleMongooseError } from '../helpers/index';
+import { handleMongooseError } from '../helpers/index.js';
 
 const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 

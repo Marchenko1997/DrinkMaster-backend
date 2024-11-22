@@ -4,7 +4,7 @@ import { verifyEmail } from '../../controllers/auth/verifyEmail.js';
 import { resendVerifyEmail } from '../../controllers/auth/resendVerifyEmail.js';
 import { validateBody} from '../../middlewares/index.js';
 import { schemas } from '../../models/users.js';
-import ctrlWrapper from '../../helpers/ctrlWrapper.js';
+import { ctrlWrapper } from '../../helpers/index.js';
 
 
 const router = express.Router();

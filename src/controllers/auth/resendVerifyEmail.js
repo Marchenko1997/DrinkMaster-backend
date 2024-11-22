@@ -31,4 +31,3 @@ export const resendVerifyEmail = async (req, res) => {
 
 }
 
- 

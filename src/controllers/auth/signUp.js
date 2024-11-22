@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
 
-import { User } from '../../models/user.js';
+import { User } from '../../models/users.js';
 import { HttpError, sendEmail, fullYearsCount } from '../../helpers/index.js';
 
 // const { BASE_URL } = process.env;

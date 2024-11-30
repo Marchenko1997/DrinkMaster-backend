@@ -11,7 +11,7 @@ const router = express.Router();
 router.patch(
   '/update',
   authenticate,
-  upload.single('avatar'),
+  upload.single('avatarURL'),
   validateBody(schemas.updateNameSchema),
   ctrlWrapper(updateUser),
 );

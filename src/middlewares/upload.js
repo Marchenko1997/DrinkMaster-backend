@@ -6,6 +6,12 @@ import multer from 'multer';
 import logger from '../helpers/logger.js';
 
 
+console.log('Cloudinary Config:', {
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_SECRET,
+});
+
 cloudinary.v2.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -20,15 +26,22 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary.v2,
   params: async (req, file) => {
     try {
+      console.log('File received:', {
+        originalname: file.originalname,
+        fieldname: file.fieldname,
+      });
       logger.info('Processing file for Cloudinary upload', {
         originalname: file.originalname,
         fieldname: file.fieldname,
       });
-
       let folder;
       const extname = path.extname(file.originalname);
       const basename = path.basename(file.originalname, extname);
-      const suffix = crypto.randomUUID();
+        const suffix = crypto.randomUUID();
+
+            console.log('File basename:', basename);
+            console.log('File extension:', extname);
+            console.log('Generated suffix:', suffix);
 
       file.originalname = `${basename}-${suffix}`;
       logger.info('File renamed for Cloudinary', {
@@ -44,6 +57,7 @@ const storage = new CloudinaryStorage({
         folder = 'others';
       }
 
+          console.log('Determined folder:', folder);
       logger.info('Folder determined for Cloudinary upload', { folder });
 
       return {
@@ -56,6 +70,10 @@ const storage = new CloudinaryStorage({
         ],
       };
     } catch (error) {
+        console.error(
+          'Error in CloudinaryStorage params configuration:',
+          error,
+        );
       logger.error('Error in CloudinaryStorage params configuration', {
         error: error.message,
       });

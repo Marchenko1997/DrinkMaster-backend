@@ -5,7 +5,7 @@ import axios from 'axios';
 class BetterStackTransport extends Transport {
   constructor(opts) {
     super(opts);
-    this.url = `https://in.logs.betterstack.com/${opts.sourceId}`;
+    this.url = 'https://in.logs.betterstack.com/';
     this.token = opts.token;
   }
 
@@ -41,8 +41,7 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(), // Логирование в консоль
     new BetterStackTransport({
-      sourceId: 'drinkmaster', // Source ID
-      token: 'QnsDyqjvaombNEjwqJ8xba1P', // Source token
+      token: 'QnsDyqjvaombNEjwqJ8xba1P', // Ваш токен из Better Stack
     }),
   ],
 });

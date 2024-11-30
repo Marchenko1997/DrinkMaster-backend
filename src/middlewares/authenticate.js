@@ -7,25 +7,30 @@ const { SECRET_KEY } = process.env;
 export const authenticate = async (req, res, next) => {
   const { authorization = '' } = req.headers;
 
+
   const [bearer, token] = authorization.split(' ');
 
-  if (bearer !== 'Bearer') {
-    return next(HttpError(401, 'Not authorized'));
+ if (bearer !== 'Bearer') {
+   return res
+     .status(401)
+     .json({ message: 'Not authorized, Bearer token missing' });
+ }
+
+try {
+  const { id } = jwt.verify(token, SECRET_KEY);
+
+  const user = await User.findById(id);
+
+  if (!user || !user.token || user.token !== token) {
+    return res
+      .status(401)
+      .json({ message: 'Not authorized, User not found or token mismatch' });
   }
 
-  try {
-    const { id } = jwt.verify(token, SECRET_KEY);
+  req.user = user;
 
-    const user = await User.findById(id);
-
-    if (!user || !user.token || user.token !== token) {
-      return next(HttpError(401, 'Not authorized'));
-    }
-
-    req.user = user;
-
-    next();
-  } catch {
-    next(HttpError(401, 'Not authorized'));
-  }
+  next();
+} catch  {
+  return res.status(401).json({ message: 'Not authorized, invalid token' });
+}
 };

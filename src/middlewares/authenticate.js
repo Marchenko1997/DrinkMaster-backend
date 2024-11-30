@@ -24,21 +24,23 @@ export const authenticate = async (req, res, next) => {
 
   try {
     const { id } = jwt.verify(token, SECRET_KEY);
+    logger.info('Token decoded successfully', { id });
 
     const user = await User.findById(id);
 
-   if (!user || user.token !== token) {
-     logger.error('User not found or token mismatch', { id, token });
-     return res
-       .status(401)
-       .json({ message: 'Not authorized, user not found or token mismatch' });
-   }
+    if (!user || user.token !== token) {
+      logger.error('User not found or token mismatch', { id, token });
+      return res
+        .status(401)
+        .json({ message: 'Not authorized, user not found or token mismatch' });
+    }
 
-   logger.info('Authentication successful', { userId: id });
-   req.user = user;
+    logger.info('Authentication successful', { userId: id });
+    req.user = user;
 
     next();
-  } catch {
+  } catch (error) {
+    logger.error('Authentication failed', { error: error.message });
     return res.status(401).json({ message: 'Not authorized, invalid token' });
   }
 };

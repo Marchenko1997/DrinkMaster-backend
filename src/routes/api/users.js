@@ -3,13 +3,19 @@ import { ctrlWrapper } from '../../helpers/index.js';
 import { getCurrent } from '../../controllers/auth/getCurrent.js';
 import { authenticate, upload } from '../../middlewares/index.js';
 import { updateUser } from '../../controllers/auth/updateUser.js';
-
-
+import { validateBody } from '../../middlewares/index.js';
+import { schemas } from '../../models/users.js';
 
 const router = express.Router();
 
-router.patch("/update", authenticate, upload.single("avatar"), ctrlWrapper(updateUser));
+router.patch(
+  '/update',
+  authenticate,
+  upload.single('avatar'),
+  validateBody(schemas.updateNameSchema),
+  ctrlWrapper(updateUser),
+);
 
-router.get("/current", authenticate, ctrlWrapper(getCurrent));
+router.get('/current', authenticate, ctrlWrapper(getCurrent));
 
 export default router;

@@ -18,7 +18,10 @@ export const updateUser = async (req, res) => {
         _id,
         { name: name || currentUserName },
         { new: true },
-      );
+      ).catch((dbError) => {
+        console.error('Database update error:', dbError);
+        throw new Error('Database update failed');
+      });
       if (!updatedUser) {
         console.error('User not found.');
         return res.status(404).json({ message: 'User not found' });
@@ -30,10 +33,14 @@ export const updateUser = async (req, res) => {
     }
 
     // Если файл загружен
-    if (!req.file.path) {
-      console.error('Uploaded file does not have a path.');
-      return res.status(400).json({ message: 'File upload failed' });
-    }
+   if (!req.file || !req.file.path) {
+     console.error(
+       'File not uploaded to Cloudinary or path missing:',
+       req.file,
+     );
+     return res.status(400).json({ message: 'File upload failed' });
+   }
+
 
     console.log('Updating user with new avatar URL:', req.file.path);
     const updatedUser = await User.findByIdAndUpdate(

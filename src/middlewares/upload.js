@@ -26,28 +26,17 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary.v2,
   params: async (req, file) => {
     try {
-      console.log('File received:', {
-        originalname: file.originalname,
-        fieldname: file.fieldname,
-      });
-      logger.info('Processing file for Cloudinary upload', {
+      console.log('File received for upload:', {
         originalname: file.originalname,
         fieldname: file.fieldname,
       });
       let folder;
       const extname = path.extname(file.originalname);
       const basename = path.basename(file.originalname, extname);
-        const suffix = crypto.randomUUID();
+      const suffix = crypto.randomUUID();
 
-            console.log('File basename:', basename);
-            console.log('File extension:', extname);
-            console.log('Generated suffix:', suffix);
-
-      file.originalname = `${basename}-${suffix}`;
-      logger.info('File renamed for Cloudinary', {
-        newOriginalname: file.originalname,
-      });
-
+      const newOriginalname = `${basename}-${suffix}`;
+      console.log('Generated new filename:', newOriginalname);
 
       if (file.fieldname === 'avatar') {
         folder = 'avatars';
@@ -57,31 +46,23 @@ const storage = new CloudinaryStorage({
         folder = 'others';
       }
 
-          console.log('Determined folder:', folder);
-      logger.info('Folder determined for Cloudinary upload', { folder });
+      console.log('Determined upload folder:', folder);
 
       return {
-        folder: folder,
+        folder,
         allowed_formats: ['jpg', 'png'],
-        public_id: file.originalname,
+        public_id: newOriginalname,
         transformation: [
           { height: 350, crop: 'scale' },
           { height: 700, crop: 'scale' },
         ],
       };
     } catch (error) {
-        console.error(
-          'Error in CloudinaryStorage params configuration:',
-          error,
-        );
-      logger.error('Error in CloudinaryStorage params configuration', {
-        error: error.message,
-      });
+      console.error('Error in Cloudinary params function:', error);
       throw error;
     }
   },
 });
-
 
 export const upload = multer({ storage });
 

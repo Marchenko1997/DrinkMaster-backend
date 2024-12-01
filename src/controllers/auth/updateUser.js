@@ -5,67 +5,55 @@ import logger from '../../helpers/logger.js';
 
 export const updateUser = async (req, res) => {
   try {
-    logger.info('Starting updateUser controller', { userId: req.user?._id });
+    console.log('Starting updateUser with user data:', req.user);
 
     const { _id, name: currentUserName } = req.user;
     const { name } = req.body;
+    console.log('Received request body:', req.body);
+    console.log('Received file:', req.file);
 
-    logger.info('Request body and user data received', {
-      userId: _id,
-      name,
-      currentUserName,
-    });
-
-    let newUserName = name || currentUserName;
-    let newAvatarURL;
-
-    // If no file is uploaded
     if (!req.file) {
-      logger.info('No file provided, updating only name', { newUserName });
-
-      const usr = await User.findByIdAndUpdate(
+      console.log('No file uploaded, updating only user name.');
+      const updatedUser = await User.findByIdAndUpdate(
         _id,
-        { name: newUserName },
+        { name: name || currentUserName },
         { new: true },
       );
-
-      if (!usr) {
-        logger.error('User not found during update', { userId: _id });
+      if (!updatedUser) {
+        console.error('User not found.');
         return res.status(404).json({ message: 'User not found' });
       }
-
-      logger.info('User updated successfully (name only)', {
-        updatedUser: usr,
+      return res.json({
+        name: updatedUser.name,
+        avatarURL: updatedUser.avatarURL,
       });
-      return res.json({ name: usr.name, avatarURL: usr.avatarURL });
-    } else {
-      // If file is uploaded
-      newAvatarURL = req.file.path;
-      logger.info('File provided, updating name and avatar', {
-        newUserName,
-        newAvatarURL,
-      });
-
-      const usr = await User.findByIdAndUpdate(
-        _id,
-        { name: newUserName, avatarURL: newAvatarURL },
-        { new: true },
-      );
-
-      if (!usr) {
-        logger.error('User not found during update with avatar', {
-          userId: _id,
-        });
-        return res.status(404).json({ message: 'User not found' });
-      }
-
-      logger.info('User updated successfully (name and avatar)', {
-        updatedUser: usr,
-      });
-      return res.json({ name: usr.name, avatarURL: usr.avatarURL });
     }
+
+    // Если файл загружен
+    if (!req.file.path) {
+      console.error('Uploaded file does not have a path.');
+      return res.status(400).json({ message: 'File upload failed' });
+    }
+
+    console.log('Updating user with new avatar URL:', req.file.path);
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      { name: name || currentUserName, avatarURL: req.file.path },
+      { new: true },
+    );
+
+    if (!updatedUser) {
+      console.error('User not found.');
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log('User successfully updated:', updatedUser);
+    return res.json({
+      name: updatedUser.name,
+      avatarURL: updatedUser.avatarURL,
+    });
   } catch (error) {
-    logger.error('Error in updateUser controller', { error: error.message });
+    console.error('Error in updateUser:', error);
     return res
       .status(500)
       .json({ message: 'Internal Server Error', error: error.message });

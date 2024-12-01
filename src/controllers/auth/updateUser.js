@@ -5,7 +5,8 @@ import logger from '../../helpers/logger.js';
 
 export const updateUser = async (req, res) => {
   try {
-    console.log('Starting updateUser with user data:', req.user);
+     console.log('=== Start updateUser ===');
+     console.log('User data from authentication middleware:', req.user);
 
     const { _id, name: currentUserName } = req.user;
     const { name } = req.body;
@@ -26,13 +27,15 @@ export const updateUser = async (req, res) => {
         console.error('User not found.');
         return res.status(404).json({ message: 'User not found' });
       }
+        console.log('User successfully updated (name only):', updatedUser);
       return res.json({
         name: updatedUser.name,
         avatarURL: updatedUser.avatarURL,
       });
     }
 
-    // Если файл загружен
+      // Если файл загружен
+      console.log('Checking file path returned by Cloudinary...');
    if (!req.file || !req.file.path) {
      console.error(
        'File not uploaded to Cloudinary or path missing:',
@@ -47,7 +50,10 @@ export const updateUser = async (req, res) => {
       _id,
       { name: name || currentUserName, avatarURL: req.file.path },
       { new: true },
-    );
+    ).catch((dbError) => {
+      console.error('Database update error:', dbError); // Лог ошибки базы данных
+      throw new Error('Database update failed');
+    });
 
     if (!updatedUser) {
       console.error('User not found.');

@@ -1,4 +1,4 @@
-import { Drink } from '../../models/drink.js';
+import { Drink } from '../../models/drinks.js';
 
 export const getHomePageDrinks = async (req, res, next) => {
   const { isAdult } = req.user;

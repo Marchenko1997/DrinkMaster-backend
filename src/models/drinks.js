@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import Joi from 'joi';
-import { handleMongooseError } from '../../helpers/index.js';
+import { handleMongooseError } from '../helpers/index.js';
 
 const drinkSchema = new Schema(
   {

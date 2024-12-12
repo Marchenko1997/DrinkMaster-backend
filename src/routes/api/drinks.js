@@ -16,6 +16,6 @@ router.get('/mainpage', authenticate, getHomePageDrinks);
 router.get('/', authenticate, getAllDrinks);
 
 router.get('/search/category', authenticate, jsonParser, getDrinksByCategory);
-router.get('/search/ingredient', authenticate, getDrinksByIngredient);
+router.get('/search/ingredients', authenticate, getDrinksByIngredient);
 
 export default router;

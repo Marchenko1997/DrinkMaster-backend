@@ -1,7 +1,9 @@
 import express from 'express';
 import { drinksControllers } from '../../controllers/drinks/index.js';
 import { drinksController } from '../../controllers/filters/index.js';
-import { authenticate } from '../../middlewares/index.js';
+import { authenticate, validateBody } from '../../middlewares/index.js';
+import { searchDrinksByFiltersSchema } from '../../models/drinks.js';
+import { getDrinksByFilters } from '../../controllers/filters/getDrinksByFilters.js';
 
 const router = express.Router();
 
@@ -14,6 +16,14 @@ const { getAllDrinks, getDrinksByCategory, getDrinksByIngredient } =
 router.get('/mainpage', authenticate, getHomePageDrinks);
 
 router.get('/', authenticate, getAllDrinks);
+
+router.get(
+  '/search',
+  authenticate,
+  jsonParser,
+  validateBody(searchDrinksByFiltersSchema),
+  getDrinksByFilters,
+);
 
 router.get('/search/category', authenticate, jsonParser, getDrinksByCategory);
 router.get('/search/ingredients', authenticate, getDrinksByIngredient);

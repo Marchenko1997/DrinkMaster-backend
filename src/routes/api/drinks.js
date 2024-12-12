@@ -7,15 +7,15 @@ const router = express.Router();
 
 const jsonParser = express.json();
 
-const { getHomePageDrinks, } = drinksControllers;
-const { getAllDrinks, getDrinksByCategory } = drinksController;
+const { getHomePageDrinks } = drinksControllers;
+const { getAllDrinks, getDrinksByCategory, getDrinksByIngredient } =
+  drinksController;
 
+router.get('/mainpage', authenticate, getHomePageDrinks);
 
-router.get("/mainpage", authenticate, getHomePageDrinks);
+router.get('/', authenticate, getAllDrinks);
 
-router.get("/", authenticate, getAllDrinks);
-
-router.get("/search/category", authenticate, jsonParser, getDrinksByCategory)
-
+router.get('/search/category', authenticate, jsonParser, getDrinksByCategory);
+router.get('/search/ingredient', authenticate, getDrinksByIngredient);
 
 export default router;

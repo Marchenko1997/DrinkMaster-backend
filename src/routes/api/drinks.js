@@ -5,14 +5,17 @@ import { authenticate } from '../../middlewares/index.js';
 
 const router = express.Router();
 
-// const jsonParser = express.json();
+const jsonParser = express.json();
 
 const { getHomePageDrinks, } = drinksControllers;
-const { getAllDrinks } = drinksController;
+const { getAllDrinks, getDrinksByCategory } = drinksController;
 
 
 router.get("/mainpage", authenticate, getHomePageDrinks);
 
 router.get("/", authenticate, getAllDrinks);
+
+router.get("/search/category", authenticate, jsonParser, getDrinksByCategory)
+
 
 export default router;

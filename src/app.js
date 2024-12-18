@@ -5,6 +5,7 @@ import cors from 'cors';
 import authRouter from "./routes/api/auth.js";
 import usersRouter from "./routes/api/users.js";
 import drinksRouter from "./routes/api/drinks.js";
+import filtersRouter from "./routes/api/filters.js";
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/drinks", drinksRouter)
+app.use("/api/drinks", drinksRouter);
+app.use("/api/filters", filtersRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });

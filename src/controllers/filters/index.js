@@ -4,11 +4,13 @@ import { getAllDrinks } from "./getAllDrinks.js";
 import { getDrinks } from "./getDrinks.js";
 import { getDrinksByIngredient } from "./getDrinksByIngredient.js";
 import { getDrinksByFilters } from "./getDrinksByFilters.js";
+import { getPopularDrinks} from "./getPopularDrinks.js";
 
 export const drinksController = {
     getAllDrinks: ctrlWrapper(getAllDrinks),
     getDrinks: ctrlWrapper(getDrinks),
     getDrinksByCategory: ctrlWrapper(getDrinksByCategory),
     getDrinksByIngredient: ctrlWrapper(getDrinksByIngredient),
-    getDrinksByFilters: ctrlWrapper(getDrinksByFilters)
+    getDrinksByFilters: ctrlWrapper(getDrinksByFilters),
+    getPopularDrinks: ctrlWrapper(getPopularDrinks)
 }

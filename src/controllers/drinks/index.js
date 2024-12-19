@@ -5,7 +5,7 @@ import { getOwnDrinks } from "./getOwnDrinks.js";
 import { removeOwnDrink } from "./removeOwnDrinks.js";
 import { getById } from "./getById.js";
 import { addToFavorites } from "./addToFavorites.js";
-import { getFavorites } from "./getfavorites.js";
+import { getFavorites } from "./getFavorites.js";
 import { removeFromFavorites } from "./removeFromFavorites.js";
 
 export const drinksControllers = {

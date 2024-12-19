@@ -1,15 +1,26 @@
 import express from 'express';
 import { drinksControllers } from '../../controllers/drinks/index.js';
 import { drinksController } from '../../controllers/filters/index.js';
-import { authenticate, validateBody, upload, isValidId } from '../../middlewares/index.js';
+import {
+  authenticate,
+  validateBody,
+  upload,
+  isValidId,
+} from '../../middlewares/index.js';
 import { searchDrinksByFiltersSchema } from '../../models/drinks.js';
-
 
 const router = express.Router();
 
 const jsonParser = express.json();
 
-const { getHomePageDrinks, addDrink, getOwnDrinks, removeOwnDrink, getById } = drinksControllers;
+const {
+  getHomePageDrinks,
+  addDrink,
+  getOwnDrinks,
+  removeOwnDrink,
+  getById,
+  addToFavorites,
+} = drinksControllers;
 const {
   getAllDrinks,
   getDrinksByCategory,
@@ -40,10 +51,12 @@ router.post(
   upload.single('drinkThumb', authenticate, jsonParser, addDrink),
 );
 
-router.get("/own", authenticate, getOwnDrinks);
+router.post('/favorites/add/:id', authenticate, addToFavorites);
 
-router.delete("/own/remove/:id", authenticate, isValidId, removeOwnDrink);
+router.get('/own', authenticate, getOwnDrinks);
 
-router.get("/:id", authenticate, isValidId, getById);
+router.delete('/own/remove/:id', authenticate, isValidId, removeOwnDrink);
+
+router.get('/:id', authenticate, isValidId, getById);
 
 export default router;

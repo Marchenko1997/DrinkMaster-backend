@@ -9,7 +9,7 @@ const router = express.Router();
 
 const jsonParser = express.json();
 
-const { getHomePageDrinks, addDrink, getOwnDrinks, removeOwnDrink } = drinksControllers;
+const { getHomePageDrinks, addDrink, getOwnDrinks, removeOwnDrink, getById } = drinksControllers;
 const {
   getAllDrinks,
   getDrinksByCategory,
@@ -43,5 +43,7 @@ router.post(
 router.get("/own", authenticate, getOwnDrinks);
 
 router.delete("/own/remove/:id", authenticate, isValidId, removeOwnDrink);
+
+router.get("/:id", authenticate, isValidId, getById);
 
 export default router;

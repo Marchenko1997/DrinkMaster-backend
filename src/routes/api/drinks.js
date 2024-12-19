@@ -20,7 +20,8 @@ const {
   removeOwnDrink,
   getById,
     addToFavorites,
-  getFavorites
+  getFavorites,
+    removeFromFavorites
 } = drinksControllers;
 const {
   getAllDrinks,
@@ -52,9 +53,10 @@ router.post(
   upload.single('drinkThumb', authenticate, jsonParser, addDrink),
 );
 
+router.delete("/favorites/remove/:id", authenticate, removeFromFavorites);
 router.get("/favorites", authenticate, getFavorites);
-
 router.post('/favorites/add/:id', authenticate, addToFavorites);
+
 
 router.get('/own', authenticate, getOwnDrinks);
 

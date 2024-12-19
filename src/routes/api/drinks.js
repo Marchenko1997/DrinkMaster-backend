@@ -1,7 +1,7 @@
 import express from 'express';
 import { drinksControllers } from '../../controllers/drinks/index.js';
 import { drinksController } from '../../controllers/filters/index.js';
-import { authenticate, validateBody, upload } from '../../middlewares/index.js';
+import { authenticate, validateBody, upload, isValidId } from '../../middlewares/index.js';
 import { searchDrinksByFiltersSchema } from '../../models/drinks.js';
 
 
@@ -9,7 +9,7 @@ const router = express.Router();
 
 const jsonParser = express.json();
 
-const { getHomePageDrinks, addDrink, getOwnDrinks } = drinksControllers;
+const { getHomePageDrinks, addDrink, getOwnDrinks, removeOwnDrink } = drinksControllers;
 const {
   getAllDrinks,
   getDrinksByCategory,
@@ -41,5 +41,7 @@ router.post(
 );
 
 router.get("/own", authenticate, getOwnDrinks);
+
+router.delete("/own/remove/:id", authenticate, isValidId, removeOwnDrink);
 
 export default router;

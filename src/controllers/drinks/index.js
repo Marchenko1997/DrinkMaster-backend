@@ -5,6 +5,7 @@ import { getOwnDrinks } from "./getOwnDrinks.js";
 import { removeOwnDrink } from "./removeOwnDrinks.js";
 import { getById } from "./getById.js";
 import { addToFavorites } from "./addToFavorites.js";
+import { getFavorites } from "./getfavorites.js";
 
 export const drinksControllers = {
     getHomePageDrinks: ctrlWrapper(getHomePageDrinks),
@@ -13,4 +14,5 @@ export const drinksControllers = {
     removeOwnDrink: ctrlWrapper(removeOwnDrink),
     getById: ctrlWrapper(getById),
     addToFavorites: ctrlWrapper(addToFavorites),
+    getFavorites: ctrlWrapper(getFavorites)
 }

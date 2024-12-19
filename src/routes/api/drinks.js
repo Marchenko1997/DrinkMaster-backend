@@ -3,13 +3,13 @@ import { drinksControllers } from '../../controllers/drinks/index.js';
 import { drinksController } from '../../controllers/filters/index.js';
 import { authenticate, validateBody, upload } from '../../middlewares/index.js';
 import { searchDrinksByFiltersSchema } from '../../models/drinks.js';
-// import { getDrinksByFilters } from '../../controllers/filters/getDrinksByFilters.js';
+
 
 const router = express.Router();
 
 const jsonParser = express.json();
 
-const { getHomePageDrinks, addDrink } = drinksControllers;
+const { getHomePageDrinks, addDrink, getOwnDrinks } = drinksControllers;
 const {
   getAllDrinks,
   getDrinksByCategory,
@@ -39,5 +39,7 @@ router.post(
   '/own/add',
   upload.single('drinkThumb', authenticate, jsonParser, addDrink),
 );
+
+router.get("/own", authenticate, getOwnDrinks);
 
 export default router;

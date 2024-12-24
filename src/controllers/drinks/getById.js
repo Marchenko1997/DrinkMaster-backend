@@ -9,9 +9,7 @@ export const getById = async (req, res) => {
 
   try {
     // Выполняем поиск в базе данных без преобразования в ObjectId
-    const result = await Drink.findOne({ _id: id }).populate(
-      'ingredients.ingredientId',
-    );
+    const result = await Drink.findOne({ _id: id });
    console.log('MongoDB Query:', { _id: id });
    console.log('Query Result:', result);
 

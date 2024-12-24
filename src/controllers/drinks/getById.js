@@ -12,7 +12,8 @@ export const getById = async (req, res) => {
     const result = await Drink.findOne({ _id: id }).populate(
       'ingredients.ingredientId',
     );
-    console.log('Result from DB:', result);
+   console.log('MongoDB Query:', { _id: id });
+   console.log('Query Result:', result);
 
     if (!result) {
       console.error('Drink not found for ID:', id);

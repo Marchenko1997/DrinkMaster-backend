@@ -15,7 +15,7 @@ export const getById = async (req, res) => {
       throw HttpError(400, 'Invalid ID format');
     }
 
-    const result = await Drink.findById(ObjectId(id)).populate(
+    const result = await Drink.findById(new ObjectId(id)).populate(
       'ingredients.ingredientId',
     );
     console.log('Result from DB:', result);

@@ -7,6 +7,8 @@ const { ObjectId } = mongoose.Types; // Извлекаем ObjectId из mongoos
 export const getById = async (req, res) => {
   const { id } = req.params;
   console.log('Received ID:', id);
+  console.log('Type of ID:', typeof id);
+  console.log('ID is valid:', ObjectId.isValid(id));
 
   try {
     // Проверяем валидность ObjectId
@@ -15,7 +17,11 @@ export const getById = async (req, res) => {
       throw HttpError(400, 'Invalid ID format');
     }
 
-    const result = await Drink.findById(new ObjectId(id)).populate(
+    // Преобразуем строку в ObjectId
+    const objectId = new ObjectId(id);
+    console.log('Converted ObjectId:', objectId);
+
+    const result = await Drink.findById(objectId).populate(
       'ingredients.ingredientId',
     );
     console.log('Result from DB:', result);

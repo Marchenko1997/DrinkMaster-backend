@@ -62,6 +62,6 @@ router.get('/own', authenticate, getOwnDrinks);
 
 router.delete('/own/remove/:id', authenticate, isValidId, removeOwnDrink);
 
-router.get('/:id', authenticate, getById);
+router.get('/:id', authenticate, isValidId, getById);
 
 export default router;

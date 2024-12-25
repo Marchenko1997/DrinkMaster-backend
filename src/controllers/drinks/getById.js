@@ -8,9 +8,8 @@ export const getById = async (req, res) => {
   console.log('Type of ID:', typeof id);
 
   try {
-    const result = await Drink.findOne({ _id: id });
-   console.log('MongoDB Query:', { _id: id });
-   console.log('Query Result:', result);
+   const result = await Drink.findById(id).populate('ingredients.ingredientId');
+
 
     if (!result) {
       console.error('Drink not found for ID:', id);

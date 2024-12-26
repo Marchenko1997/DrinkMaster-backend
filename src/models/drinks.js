@@ -127,7 +127,7 @@ const drinkSchema = new Schema(
         measure: String,
         ingredientId: {
           type: Schema.Types.ObjectId,
-          ref: 'ingredient',
+          ref:'ingredients',
         },
       },
     ],

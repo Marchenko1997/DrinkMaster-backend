@@ -1,10 +1,10 @@
 import express from 'express';
-import { ctrlWrapper } from '../../helpers/index.js';
-import { getCurrent } from '../../controllers/auth/getCurrent.js';
 import { authenticate, upload } from '../../middlewares/index.js';
-import { updateUser } from '../../controllers/auth/updateUser.js';
 import { validateBody } from '../../middlewares/index.js';
 import { schemas } from '../../models/users.js';
+import { authControllers } from '../../controllers/auth/index.js';
+
+const { subscribe, getCurrent, updateUser } = authControllers;
 
 const router = express.Router();
 
@@ -13,9 +13,11 @@ router.patch(
   authenticate,
   upload.single('avatar'),
   validateBody(schemas.updateNameSchema),
-  ctrlWrapper(updateUser),
+  updateUser,
 );
 
-router.get('/current', authenticate, ctrlWrapper(getCurrent));
+router.get('/current', authenticate, getCurrent);
+
+router.post("/subscribe", authenticate, subscribe)
 
 export default router;

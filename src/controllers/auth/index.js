@@ -5,6 +5,7 @@ import { resendVerifyEmail } from './resendVerifyEmail.js';
 import { logOut } from './logOut.js';
 import { getCurrent } from './getCurrent.js';
 import { updateUser } from './updateUser.js';
+import { subscribe } from './subscribe.js';
 
 
 import { ctrlWrapper } from '../../helpers/index.js';
@@ -17,5 +18,5 @@ export const authControllers = {
   logout: ctrlWrapper(logOut),
   getCurrent: ctrlWrapper(getCurrent),
   updateUser: ctrlWrapper(updateUser),
-
+  subscribe: ctrlWrapper(subscribe),
 };

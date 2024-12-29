@@ -54,7 +54,7 @@ router.post(
     console.log('POST /api/drinks/own/add called');
     next();
   },
-  upload.single('drinkThumb', authenticate, jsonParser, addDrink),
+  upload.single('drinkThumb'), authenticate, jsonParser, addDrink,
 );
 
 router.delete("/favorites/remove/:id", authenticate, removeFromFavorites);

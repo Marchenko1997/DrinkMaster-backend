@@ -1,9 +1,14 @@
 import { Drink, drinkJoiSchema } from '../../models/drinks.js';
 
 export const addDrink = async (req, res, next) => {
+    console.log('addDrink invoked');
+    console.log('Request Body:', req.body);
+    console.log('Uploaded File:', req.file);
+    console.log('User ID:', req.user);
     const response = drinkJoiSchema.validate(req.body, { abortEarly: false });
 
-    if (response.error) {
+  if (response.error) {
+         console.error('Validation Error:', response.error);
         return res.status(400).json({message: `{response.error}`})
     }
 

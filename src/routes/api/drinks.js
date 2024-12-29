@@ -50,10 +50,6 @@ router.get('/search/ingredients', authenticate, getDrinksByIngredient);
 
 router.post(
   '/own/add',
-  (req, res, next) => {
-    console.log('POST /api/drinks/own/add called');
-    next();
-  },
   upload.single('drinkThumb'), authenticate, jsonParser, addDrink,
 );
 

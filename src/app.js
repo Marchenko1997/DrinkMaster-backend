@@ -2,12 +2,19 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 
+import swaggerUi from 'swagger-ui-express';
 import authRouter from "./routes/api/auth.js";
 import usersRouter from "./routes/api/users.js";
 import drinksRouter from "./routes/api/drinks.js";
 import filtersRouter from "./routes/api/filters.js";
+import fs from 'fs';
+
+const swaggerDocument = JSON.parse(
+  fs.readFileSync(new URL('../swagger.json', import.meta.url)),
+);
 
 const app = express();
+
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -21,6 +28,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/drinks", drinksRouter);
 app.use("/api/filters", filtersRouter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });

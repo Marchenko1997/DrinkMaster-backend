@@ -26,26 +26,26 @@ const userSchema = new Schema(
     birthday: {
       type: Date,
       required: [true, 'Birthday is required'],
-      dafault: defBirthday,
+      default: defBirthday,
     },
     isAdult: {
       type: Boolean,
-      dafault: false,
+      default: false,
     },
     avatarURL: {
       type: String,
     },
     subscribe: {
       type: Boolean,
-      dafault: false,
+      default: false,
     },
     token: {
       type: String,
-      dafault: null,
+      default: null,
     },
     verificationToken: {
       type: String,
-      dafault: '',
+      default: '',
     },
     verify: {
       type: Boolean,

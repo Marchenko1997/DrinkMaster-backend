@@ -29,7 +29,6 @@
     "pino-pretty": "^13.0.0"
   },
   "dependencies": {
-    "@sendgrid/mail": "^8.1.4",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.3",
@@ -47,6 +46,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "nanoid": "^5.0.8",
     "nodemailer": "^6.9.16",
+    "resend": "^6.9.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0",

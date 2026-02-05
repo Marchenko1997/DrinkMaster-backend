@@ -1,18 +1,22 @@
-import sgMail from '@sendgrid/mail';
-import dotenv from 'dotenv';
+import { Resend } from 'resend';
 
-dotenv.config();
-
-const { SENDGRID_API_KEY } = process.env;
-
-sgMail.setApiKey(SENDGRID_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (data) => {
-    const email = { ...data, from: 'marchenkohalyna888@gmail.com' };
-
-    await sgMail.send(email);
+  const { to, subject, html } = data;
+  try {
+    await resend.emails.send({
+      from: 'DrinkMaster <onboarding@resend.dev>', // Resend free from
+      to,
+      subject,
+      html,
+    });
+    console.log(`Email sent to: ${to}`);
     return true;
-
-}
+  } catch (error) {
+    console.error('Resend error:', error.message);
+    throw new Error('Email send failed');
+  }
+};
 
 export default sendEmail;

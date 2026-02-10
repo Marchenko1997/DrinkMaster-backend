@@ -11,7 +11,7 @@ const sendEmail = async (data) => {
 
   try {
     const { data: result, error } = await resend.emails.send({
-      from: 'DrinkMaster <onboarding@resend.dev>',
+      from: 'DrinkMaster <support@drinkmaster.guru>',
       to,
       subject,
       html,
